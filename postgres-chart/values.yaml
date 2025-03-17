@@ -1,0 +1,57 @@
+# Default values for PostgreSQL chart
+image:
+  repository: postgres
+  tag: "15.4"
+  pullPolicy: IfNotPresent
+
+# PostgreSQL configuration
+postgres:
+  database: postgres
+  username: postgres
+  # You should change this password - it will be stored as a secret
+  password: "changeme"
+  port: 5432
+  
+  # Custom postgres configuration
+  config:
+    max_connections: 100
+    shared_buffers: 256MB
+    effective_cache_size: 1GB
+    maintenance_work_mem: 64MB
+    checkpoint_completion_target: 0.9
+    wal_buffers: 16MB
+    default_statistics_target: 100
+    random_page_cost: 1.1
+    effective_io_concurrency: 200
+    work_mem: 6553kB
+    min_wal_size: 1GB
+    max_wal_size: 4GB
+    max_worker_processes: 8
+    max_parallel_workers_per_gather: 4
+    max_parallel_workers: 8
+    max_parallel_maintenance_workers: 4
+
+persistence:
+  enabled: true
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 8Gi
+
+resources:
+  requests:
+    memory: "1Gi"
+    cpu: "100m"
+  limits:
+    memory: "2Gi"
+    cpu: "1000m"
+
+service:
+  type: ClusterIP
+  port: 5432
+
+# Security context settings
+securityContext:
+  enabled: true
+  fsGroup: 999
+  runAsUser: 999
+  
