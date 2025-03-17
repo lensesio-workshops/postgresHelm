@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "postgres.fullname" . }}-config
+  labels:
+    {{- include "postgres.labels" . | nindent 4 }}
+data:
+  postgresql.conf: |
+    listen_addresses = '*'
+    port = {{ .Values.postgres.port }}
+    max_connections = {{ .Values.postgres.config.max_connections }}
+    shared_buffers = {{ .Values.postgres.config.shared_buffers }}
+    effective_cache_size = {{ .Values.postgres.config.effective_cache_size }}
+    maintenance_work_mem = {{ .Values.postgres.config.maintenance_work_mem }}
+    checkpoint_completion_target = {{ .Values.postgres.config.checkpoint_completion_target }}
+    wal_buffers = {{ .Values.postgres.config.wal_buffers }}
+    default_statistics_target = {{ .Values.postgres.config.default_statistics_target }}
+    random_page_cost = {{ .Values.postgres.config.random_page_cost }}
+    effective_io_concurrency = {{ .Values.postgres.config.effective_io_concurrency }}
+    work_mem = {{ .Values.postgres.config.work_mem }}
+    min_wal_size = {{ .Values.postgres.config.min_wal_size }}
+    max_wal_size = {{ .Values.postgres.config.max_wal_size }}
+    max_worker_processes = {{ .Values.postgres.config.max_worker_processes }}
+    max_parallel_workers_per_gather = {{ .Values.postgres.config.max_parallel_workers_per_gather }}
+    max_parallel_workers = {{ .Values.postgres.config.max_parallel_workers }}
+    max_parallel_maintenance_workers = {{ .Values.postgres.config.max_parallel_maintenance_workers }}
